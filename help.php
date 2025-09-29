@@ -79,7 +79,8 @@ header('Content-Type: text/html; charset=utf-8');
 
     <div class="endpoint">
         <h3>2. UART</h3>
-        <p><code>?protocol=uart&amp;projectName=Demo&amp;eventName=ledToggle&amp;baudRate=9600&amp;uartMessage=trigger_led&amp;rxPin_receiver=16&amp;txPin_receiver=17&amp;rxPin_sender=17&amp;txPin_sender=16</code></p>
+        <p><code>?protocol=uart&amp;projectName=Demo&amp;eventName=ledToggle&amp;baudRate=9600&amp;
+            uartMessage=trigger_led&amp;rxPin_receiver=16&amp;txPin_receiver=17&amp;rxPin_sender=17&amp;txPin_sender=16</code></p>
         <ul>
             <li><b>serialPort</b> (int, optional, default=2) – ESP32: 0, 1, or 2</li>
             <li><b>baudRate</b> (int, optional, default=115200)</li>
