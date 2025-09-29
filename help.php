@@ -3,6 +3,7 @@ header('Content-Type: text/html; charset=utf-8');
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Arduino Code Generator API - Help</title>
@@ -15,15 +16,20 @@ header('Content-Type: text/html; charset=utf-8');
             line-height: 1.6;
             background: #f9f9f9;
         }
-        h1, h2, h3 {
+
+        h1,
+        h2,
+        h3 {
             color: #333;
         }
+
         code {
             background: #eee;
             padding: 2px 4px;
             border-radius: 3px;
             font-size: 0.95em;
         }
+
         .endpoint {
             border: 1px solid #ddd;
             background: #fff;
@@ -31,15 +37,17 @@ header('Content-Type: text/html; charset=utf-8');
             margin: 15px 0;
             border-radius: 5px;
         }
+
         ul {
             margin: 5px 0 15px 20px;
         }
     </style>
 </head>
+
 <body>
     <h1>Arduino Code Generator API – Help</h1>
     <p>
-        This API dynamically generates Arduino <code>C/C++</code> code for different 
+        This API dynamically generates Arduino <code>C/C++</code> code for different
         communication protocols (<b>I2C</b>, <b>UART</b>, <b>TCP/MQTT</b>) based on URL parameters.
     </p>
 
@@ -71,18 +79,19 @@ header('Content-Type: text/html; charset=utf-8');
 
     <div class="endpoint">
         <h3>2. UART</h3>
-        <p><code>?protocol=uart&amp;projectName=Demo&amp;eventName=ledToggle&amp;baudRate=9600&amp;uartMessage=trigger_led</code></p>
+        <p><code>?protocol=uart&amp;projectName=Demo&amp;eventName=ledToggle&amp;baudRate=9600&amp;uartMessage=trigger_led&amp;rxPin_receiver=16&amp;txPin_receiver=17&amp;rxPin_sender=17&amp;txPin_sender=16</code></p>
         <ul>
             <li><b>serialPort</b> (int, optional, default=2) – ESP32: 0, 1, or 2</li>
-            <li><b>rxPin</b> (int, optional, default=16)</li>
-            <li><b>txPin</b> (int, optional, default=17)</li>
             <li><b>baudRate</b> (int, optional, default=115200)</li>
+            <li><b>rxPin_receiver</b> (int, optional, default=16) – The RX pin for the device receiving the message.</li>
+            <li><b>txPin_receiver</b> (int, optional, default=17) – The TX pin for the device receiving the message.</li>
+            <li><b>rxPin_sender</b> (int, optional, default=17) – The RX pin for the device sending the message.</li>
+            <li><b>txPin_sender</b> (int, optional, default=16) – The TX pin for the device sending the message.</li>
             <li><b>uartMessage</b> (string, optional, default=<code>trigger_eventName</code>)</li>
         </ul>
         <p><b>Limitations:</b></p>
         <ul>
-            <li>Both sender and receiver use <code>HardwareSerial</code>; rename objects if using multiple UART events.</li>
-            <li>Event reset logic is required to avoid repeated triggers.</li>
+            <li>Event reset logic is required to avoid repeated triggers on the receiver side.</li>
         </ul>
     </div>
 
@@ -117,4 +126,5 @@ header('Content-Type: text/html; charset=utf-8');
         <li>Generated code may need minor manual integration (e.g., avoiding duplicate includes).</li>
     </ul>
 </body>
+
 </html>

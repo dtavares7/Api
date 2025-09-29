@@ -12,6 +12,12 @@ if (isset($_GET['protocol']) && isset($_GET['projectName']) && isset($_GET['even
     $eventName = $_GET['eventName'];
     $flagName = $eventName . "_trigger_flag";
 
+    //validate protocol and prjectName variables
+    if (!preg_match('/^[a-zA-Z_][a-zA-Z0-9_]*$/', $projectName) || !preg_match('/^[a-zA-Z_][a-zA-Z0-9_]*$/', $eventName)) {
+        http_response_code(400);
+        echo "Error: 'projectName' and 'eventName' must be valid C identifiers (letters, numbers, underscores, and not start with a number).";
+        exit;
+    }
     // 3. Validate if the provided protocol is in our allowed list
     if (in_array($protocol, $allowedProtocols)) {
 
@@ -174,8 +180,12 @@ if (isset($_GET['protocol']) && isset($_GET['projectName']) && isset($_GET['even
 
                     // --- Optional Parameters with Safe Defaults ---
                     $serialPort = filter_input(INPUT_GET, 'serialPort', FILTER_VALIDATE_INT, ["options" => ["min_range" => 0, "max_range" => 2]]) ?? 2;
-                    $rxPin = filter_input(INPUT_GET, 'rxPin', FILTER_VALIDATE_INT) ?? 16;
-                    $txPin = filter_input(INPUT_GET, 'txPin', FILTER_VALIDATE_INT) ?? 17;
+                    // Note: Defaults are set logically (TX of one is RX of the other)
+                    $rxPin_receiver = filter_input(INPUT_GET, 'rxPin_receiver', FILTER_VALIDATE_INT) ?? 16;
+                    $txPin_receiver = filter_input(INPUT_GET, 'txPin_receiver', FILTER_VALIDATE_INT) ?? 17;
+                    $rxPin_sender   = filter_input(INPUT_GET, 'rxPin_sender', FILTER_VALIDATE_INT) ?? 17; 
+                    $txPin_sender   = filter_input(INPUT_GET, 'txPin_sender', FILTER_VALIDATE_INT) ?? 16; 
+
                     $baudRate = filter_input(INPUT_GET, 'baudRate', FILTER_VALIDATE_INT) ?? 115200;
 
                     // --- Shared UART Message ---
@@ -204,8 +214,8 @@ if (isset($_GET['protocol']) && isset($_GET['projectName']) && isset($_GET['even
 
             // -- UART Configuration --
             HardwareSerial MySerial($serialPort);
-            #define RXD2 $rxPin
-            #define TXD2 $txPin
+            #define RXD2 $rxPin_receiver
+            #define TXD2 $txPin_receiver
 
             // -- Message and Flag Definitions --
             const String $uartMessageName = "$uartMessageContent";
@@ -269,8 +279,8 @@ if (isset($_GET['protocol']) && isset($_GET['projectName']) && isset($_GET['even
 
             // -- UART Configuration --
             HardwareSerial MySerial($serialPort);
-            #define RXD2 $rxPin
-            #define TXD2 $txPin
+            #define RXD2 $rxPin_sender
+            #define TXD2 $txPin_sender
 
             // -- Message Definitions --
             const String $uartMessageName = "$uartMessageContent";

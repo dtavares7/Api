@@ -29,7 +29,6 @@ Follow these steps to run the API on your local machine.
 3.  **Start Apache Server:**
     Open the XAMPP Control Panel and start the **Apache** module. A green status indicates it's running correctly.
 
-    [Image of XAMPP Control Panel with Apache started]
 
 ## Usage
 
