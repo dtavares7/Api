@@ -41,6 +41,13 @@ header('Content-Type: text/html; charset=utf-8');
         ul {
             margin: 5px 0 15px 20px;
         }
+        code {
+            background: #eee;
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-size: 0.95em;
+            word-break: break-all; /* <-- Adicione esta linha */
+        }
     </style>
 </head>
 
